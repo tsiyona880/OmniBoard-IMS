@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integrated Attendance-Clinic Management System | AIBSBSS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-school"></i>
+                <h1>Boarding School Attendance Management System</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" onclick="showPage('home')">Home</a></li>
+                    <li><a href="#" onclick="showPage('login')">Login</a></li>
+                    <li><a href="#" onclick="showPage('student-service')">Student Service</a></li>
+                    <li><a href="#" onclick="showPage('logic')">System Logic</a></li>
+                </ul>
+            </nav>
+            <div class="current-user">
+                <i class="fas fa-user-circle"></i>
+                <span id="current-role">Not logged in</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- HOME PAGE -->
+        <div id="home" class="page active">
+            <div class="hero">
+                <h1>Integrated Attendance Management System</h1>
+                <p>Connecting attendance, student wellbeing, and campus security</p>
+                <div class="btn-container">
+                    <button class="btn btn-primary" onclick="showPage('login')"><i class="fas fa-sign-in-alt"></i> Login to System</button>
+                    <button class="btn btn-secondary" onclick="showPage('student-service')"><i class="fas fa-user-graduate"></i> Student Service</button>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h2>System Overview</h2>
+                    <div class="card-icon"><i class="fas fa-clipboard-check"></i></div>
+                </div>
+                <p>This comprehensive system manages student attendance, health records, permission slips, and campus security. All data is accessible only based on user roles to ensure privacy and fairness.</p>
+                <div class="summary-stats">
+                    <div class="stat-card"><div class="stat-label">Roles Supported</div><div class="stat-value">6</div><div>Admin, Teacher, Clinic, Psychiatrist, Director, Guard</div></div>
+                    <div class="stat-card"><div class="stat-label">Student Tracking</div><div class="stat-value">4</div><div>Attendance, Health, Location, Permissions</div></div>
+                    <div class="stat-card"><div class="stat-label">Security Features</div><div class="stat-value">3</div><div>Gate Control, Phone Verification, Role Access</div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LOGIN PAGE -->
+        <div id="login" class="page">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Role-Based Login</h2>
+                    <div class="card-icon"><i class="fas fa-user-shield"></i></div>
+                </div>
+                <div class="form-group"><label>Select Your Role</label>
+                    <div class="role-buttons">
+                        <div class="role-btn" onclick="selectRole('admin')"><i class="fas fa-cogs"></i><span>Admin</span></div>
+                        <div class="role-btn" onclick="selectRole('teacher')"><i class="fas fa-chalkboard-teacher"></i><span>Teacher</span></div>
+                        <div class="role-btn" onclick="selectRole('clinic')"><i class="fas fa-clinic-medical"></i><span>Clinic</span></div>
+                        <div class="role-btn" onclick="selectRole('psychiatrist')"><i class="fas fa-user-md"></i><span>Psychiatrist</span></div>
+                        <div class="role-btn" onclick="selectRole('director')"><i class="fas fa-chart-line"></i><span>Director</span></div>
+                        <div class="role-btn" onclick="selectRole('guard')"><i class="fas fa-shield-alt"></i><span>Guard</span></div>
+                    </div>
+                </div>
+                <div class="form-group"><label>User ID</label><input type="text" id="user-id" class="form-control" placeholder="Enter your ID"></div>
+                <div class="form-group"><label>Password</label><input type="password" id="password" class="form-control" placeholder="Enter password"></div>
+                <div style="text-align: center;"><button class="btn btn-primary" onclick="login()"><i class="fas fa-sign-in-alt"></i> Login</button></div>
+                <div class="notification info">
+                    <i class="fas fa-lock"></i>
+                    <div>
+                        <strong>🔐 Default Credentials:</strong><br>
+                        Admin: ADM-001 / admin123<br>
+                        Teacher: TCH-101 / teacher123<br>
+                        Clinic: CLN-201 / clinic123<br>
+                        Director: DIR-401 / director123<br>
+                        Guard: GRD-501 / guard123<br>
+                        Psychiatrist: PSY-301 / psych123
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADMIN DASHBOARD -->
+        <div id="admin-dashboard" class="page">
+            <div class="dashboard-container">
+                <div class="sidebar">
+                    <h3>Admin Control Panel</h3>
+                    <ul class="sidebar-nav">
+                        <li><a href="#" class="active" onclick="showAdminSection('grades')"><i class="fas fa-graduation-cap"></i> Grades & Sections</a></li>
+                        <li><a href="#" onclick="showAdminSection('students')"><i class="fas fa-users"></i> Student Database</a></li>
+                        <li><a href="#" onclick="showAdminSection('users')"><i class="fas fa-user-cog"></i> User Accounts</a></li>
+                        <li><a href="#" onclick="showAdminSection('periods')"><i class="fas fa-clock"></i> Periods & Subjects</a></li>
+                    </ul>
+                </div>
+                <div class="main-content">
+                    <div id="admin-grades" class="admin-section">
+                        <h2>📚 Manage Grades & Sections</h2>
+                        <div class="card"><h3>Current Academic Structure</h3>  <table> <thead> <tr><th>Grade</th><th>Sections</th><th>Students</th></tr> </thead><tbody> <tr><td>Grade 9</td><td>A, B, C</td><td>45</td></tr> <tr><td>Grade 10</td><td>A, B, C</td><td>48</td></tr> <tr><td>Grade 11</td><td>A, B, C</td><td>42</td></tr> <tr><td>Grade 12</td><td>A, B, C</td><td>40</td></tr> </tbody></table></div>
+                    </div>
+                    <div id="admin-students" class="admin-section" style="display:none">
+                        <h2>👥 Student Database</h2>
+                        <div class="dropdown-row"><div class="form-group"><label>Filter by Grade</label><select id="filter-grade" class="form-control" onchange="filterStudents()"><option value="all">All Grades</option><option>Grade 9</option><option>Grade 10</option><option>Grade 11</option><option>Grade 12</option></select></div></div>
+                        <div class="card"><div style="overflow-x:auto"><table><thead><tr><th>ID</th><th>Name</th><th>Grade</th><th>Section</th><th>Phone</th></tr></thead><tbody id="student-tbody"></tbody></table></div></div>
+                    </div>
+                    <div id="admin-users" class="admin-section" style="display:none">
+                        <h2>👤 User Account Management</h2>
+                        <div class="card">
+                            <h3>➕ Create New User</h3>
+                            <div class="dropdown-row">
+                                <div class="form-group"><label>Full Name</label><input type="text" id="new-user-name" class="form-control"></div>
+                                <div class="form-group"><label>Role</label><select id="new-user-role" class="form-control" onchange="toggleTeacherFields()"><option value="teacher">Teacher</option><option value="clinic">Clinic</option><option value="psychiatrist">Psychiatrist</option><option value="director">Director</option><option value="guard">Guard</option></select></div>
+                            </div>
+                            <div id="teacher-fields" style="display:none"><div class="dropdown-row"><div class="form-group"><label>Grade</label><select id="new-user-grade" class="form-control"><option>Grade 9</option><option>Grade 10</option><option>Grade 11</option><option>Grade 12</option></select></div><div class="form-group"><label>Section</label><select id="new-user-section" class="form-control"><option>A</option><option>B</option><option>C</option></select></div><div class="form-group"><label>Subject</label><input type="text" id="new-user-subject" class="form-control" placeholder="e.g., Mathematics"></div></div></div>
+                            <button class="btn btn-primary" onclick="createNewUser()">Create Account</button>
+                        </div>
+                        <div class="card"><h3>📋 Staff Accounts</h3><div style="overflow-x:auto"><table><thead><tr><th>ID</th><th>Name</th><th>Role</th><th>Grade</th><th>Subject</th><th>Actions</th></tr></thead><tbody id="user-list-tbody"></tbody></table></div></div>
+                    </div>
+                    <div id="admin-periods" class="admin-section" style="display:none">
+                        <h2>⏰ Periods & Subjects</h2>
+                        <div class="card"><h3>Daily Schedule</h3><table><thead><tr><th>Period</th><th>Time</th><th>Subject</th></tr></thead><tbody><tr><td>1</td><td>8:00-8:45</td><td>Mathematics</td></tr><tr><td>2</td><td>8:50-9:35</td><td>English</td></tr><tr><td>3</td><td>9:40-10:25</td><td>Science</td></tr><tr><td>4</td><td>10:30-11:15</td><td>History</td></tr><tr><td>5</td><td>11:20-12:05</td><td>Physics</td></tr><tr><td>6</td><td>12:10-12:55</td><td>Chemistry</td></tr></tbody></table></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEACHER DASHBOARD -->
+        <div id="teacher-dashboard" class="page">
+            <div class="dashboard-container">
+                <div class="sidebar">
+                    <h3>Teacher Portal</h3>
+                    <ul class="sidebar-nav">
+                        <li><a href="#" class="active" onclick="showTeacherSection('attendance')"><i class="fas fa-clipboard-list"></i> Take Attendance</a></li>
+                        <li><a href="#" onclick="showTeacherSection('submit-director')"><i class="fas fa-paper-plane"></i> Submit Report</a></li>
+                    </ul>
+                </div>
+                <div class="main-content">
+                    <div id="teacher-attendance">
+                        <h2>📋 Take Attendance</h2>
+                        <div class="dropdown-row">
+                            <div class="form-group"><label>Grade</label><select id="teacher-grade" class="form-control"><option>Grade 9</option><option>Grade 10</option><option>Grade 11</option><option>Grade 12</option></select></div>
+                            <div class="form-group"><label>Section</label><select id="teacher-section" class="form-control"><option>A</option><option>B</option><option>C</option></select></div>
+                            <div class="form-group"><label>Period</label><select id="teacher-period" class="form-control"><option>Period 1 (8:00-8:45)</option><option>Period 2 (8:50-9:35)</option><option>Period 3 (9:40-10:25)</option></select></div>
+                            <div class="form-group"><label>Subject</label><select id="teacher-subject" class="form-control"><option>Mathematics</option><option>English</option><option>Science</option><option>History</option></select></div>
+                        </div>
+                        <button class="btn btn-primary" onclick="loadStudentList()"><i class="fas fa-users"></i> Load Students</button>
+                        <div id="teacher-student-list" style="display:none; margin-top:20px"></div>
+                    </div>
+                    <div id="teacher-submit-director" style="display:none">
+                        <h2>📝 Submit Report to Director</h2>
+                        <div class="form-group"><label>Title</label><input type="text" id="report-title" class="form-control"></div>
+                        <div class="form-group"><label>Grade</label><select id="report-grade-select" class="form-control"><option>Grade 9</option><option>Grade 10</option><option>Grade 11</option><option>Grade 12</option></select></div>
+                        <div class="form-group"><label>Details</label><textarea id="report-details" class="form-control" rows="4"></textarea></div>
+                        <button class="btn btn-primary" onclick="submitDirectorReport()">Submit Report</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CLINIC DASHBOARD -->
+        <div id="clinic-dashboard" class="page">
+            <div class="card">
+                <div class="card-header"><h2>🏥 Clinic Portal - Verify Medical Absences</h2><div class="card-icon"><i class="fas fa-clinic-medical"></i></div></div>
+                <div id="clinic-absences-list"></div>
+            </div>
+        </div>
+
+        <!-- PSYCHIATRIST DASHBOARD -->
+        <div id="psychiatrist-dashboard" class="page">
+            <div class="card">
+                <div class="card-header"><h2>🧠 Psychiatrist Portal</h2><div class="card-icon"><i class="fas fa-user-md"></i></div></div>
+                <div id="psych-referrals"></div>
+            </div>
+        </div>
+
+        <!-- DIRECTOR DASHBOARD - MATCHES YOUR SCREENSHOT -->
+        <div id="director-dashboard" class="page">
+            <div class="dashboard-container">
+                <div class="sidebar">
+                    <h3>Director Summary</h3>
+                    <ul class="sidebar-nav">
+                        <li><a href="#" class="active" onclick="showDirectorSection('overview')"><i class="fas fa-chart-pie"></i> Overview</a></li>
+                        <li><a href="#" onclick="showDirectorSection('attendance')"><i class="fas fa-clipboard-check"></i> Attendance Summary</a></li>
+                        <li><a href="#" onclick="showDirectorSection('reports')"><i class="fas fa-file-alt"></i> Teacher Reports</a></li>
+                    </ul>
+                </div>
+                <div class="main-content">
+                    <div id="director-overview">
+                        <h2>Attendance & Wellbeing Summary</h2>
+                        <div class="summary-stats">
+                            <div class="stat-card"><div class="stat-label">Total Students</div><div class="stat-value">175</div></div>
+                            <div class="stat-card"><div class="stat-label">Verified Medical Absences</div><div class="stat-value">5</div></div>
+                            <div class="stat-card"><div class="stat-label">Unverified Absences</div><div class="stat-value">8</div></div>
+                            <div class="stat-card"><div class="stat-label">Permission Slips Today</div><div class="stat-value">3</div></div>
+                        </div>
+                    </div>
+                    
+                    <div id="director-attendance" style="display:none">
+                        <h2>Attendance Summary</h2>
+                        <div class="card">
+                            <h3>Recent Absence Summary</h3>
+                            <table>
+                                <thead><tr><th>Student Name</th><th>Grade</th><th>Section</th><th>Period & Subject</th><th>Status</th></tr></thead>
+                                <tbody id="attendance-summary-tbody">
+                                    <tr><td>Abebe Bikila</td><td>Grade 9</td><td>Section A</td><td>Period 3 (English)</td><td><span class="status-badge status-verified">Verified Medical</span></td></tr>
+                                    <tr><td>Mekdes Haile</td><td>Grade 9</td><td>Section A</td><td>Period 5 (Mathematics)</td><td><span class="status-badge status-unverified">Unverified</span></td></tr>
+                                    <tr><td>John Doe</td><td>Grade 10</td><td>Section B</td><td>Period 2 (Science)</td><td><span class="status-badge status-permission">Permission Granted</span></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div id="director-reports" style="display:none">
+                        <h2>Teacher Reports & Absence Alerts</h2>
+                        <p>Reports submitted by teachers regarding attendance concerns and automatic absence alerts.</p>
+                        <div id="director-alerts-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!-- Guard Dashboard -->
+        <div id="guard-dashboard" class="page">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Gate Guard Portal</h2>
+                    <div class="card-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                </div>
+                <p>Check student permission status before allowing exit from campus. Verify with the system and document departures.</p>
+                
+                <div class="dropdown-row">
+                    <div class="form-group">
+                        <label for="guard-student">Student Name/ID</label>
+                        <input type="text" id="guard-student" class="form-control" placeholder="Enter student name or ID">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="guard-date">Date</label>
+                        <input type="date" id="guard-date" class="form-control" value="2023-10-15">
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary" onclick="checkPermission()" style="padding: 12px 30px;">
+                    <i class="fas fa-search"></i> Check Permission Status
+                </button>
+                
+                <div id="permission-result" style="display: none; margin-top: 30px;">
+                    <div class="notification info">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <strong>Permission Found for: <span id="student-name">Abebe Bikila</span></strong><br>
+                            <p>Grade 9 - Section A - Student ID: S1001</p>
+                            <p><strong>Permission Type:</strong> Medical Appointment</p>
+                            <p><strong>Approved By:</strong> Clinic Staff</p>
+                            <p><strong>Time Out:</strong> 10:00 AM | <strong>Expected Return:</strong> 2:00 PM</p>
+                            <p><strong>Guardian Contact:</strong> +251 91 123 4567</p>
+                        </div>
+                    </div>
+                    
+                    <div class="permission-form">
+                        <div class="form-group">
+                            <label for="exit-time">Actual Exit Time</label>
+                            <input type="time" id="exit-time" class="form-control" value="10:05">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="guard-notes">Guard Notes (Optional)</label>
+                            <textarea id="guard-notes" class="form-control" placeholder="Any observations or notes..."></textarea>
+                        </div>
+                        
+                        <div style="text-align: center;">
+                            <button class="btn btn-success" onclick="recordExit()" style="padding: 12px 30px; margin-right: 10px;">
+                                <i class="fas fa-check-circle"></i> Record Exit
+                            </button>
+                            <button class="btn btn-danger" onclick="denyExit()" style="padding: 12px 30px;">
+                                <i class="fas fa-times-circle"></i> Deny Exit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card" style="margin-top: 30px;">
+                    <h3 style="margin-bottom: 20px;">Today's Expected Exits</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Student Name</th>
+                                <th>Grade</th>
+                                <th>Permission Type</th>
+                                <th>Expected Time</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Abebe Bikila</strong></td>
+                                <td>Grade 9</td>
+                                <td>Medical Appointment</td>
+                                <td>10:00 AM</td>
+                                <td><span class="status-badge status-verified">Approved</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>John Doe</strong></td>
+                                <td>Grade 10</td>
+                                <td>Family Visit</td>
+                                <td>1:00 PM</td>
+                                <td><span class="status-badge status-verified">Approved</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Sarah Smith</strong></td>
+                                <td>Grade 11</td>
+                                <td>Dental Checkup</td>
+                                <td>11:30 AM</td>
+                                <td><span class="status-badge status-unverified">Pending</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- STUDENT SERVICE -->
+        <div id="student-service" class="page">
+            <div class="card">
+                <div class="card-header"><h2>Student Permission Service</h2><div class="card-icon"><i class="fas fa-user-graduate"></i></div></div>
+                <div class="form-group"><label>Student Name</label><input type="text" id="service-name" class="form-control"></div>
+                <div class="form-group"><label>Grade</label><select id="service-grade" class="form-control"><option>Grade 9</option><option>Grade 10</option><option>Grade 11</option><option>Grade 12</option></select></div>
+                <div class="form-group"><label>Reason</label><select id="service-reason" class="form-control"><option>Medical Appointment</option><option>Family Emergency</option><option>Personal Reason</option></select></div>
+                <div class="form-group"><label>Details</label><textarea id="service-details" class="form-control" rows="3"></textarea></div>
+                <button class="btn btn-primary" onclick="submitRequest()">Submit Permission Request</button>
+            </div>
+        </div>
+
+        <!-- SYSTEM LOGIC -->
+        <div id="logic" class="page">
+            <div class="card">
+                <div class="card-header"><h2>System Logic Flow</h2><div class="card-icon"><i class="fas fa-project-diagram"></i></div></div>
+                <div class="flow-diagram">
+                    <div class="flow-step"><i class="fas fa-chalkboard-teacher"></i><h4>Teacher Marks</h4></div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step"><i class="fas fa-flag"></i><h4>System Flags</h4></div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step"><i class="fas fa-clinic-medical"></i><h4>Clinic Verifies</h4></div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step"><i class="fas fa-shield-alt"></i><h4>Guard Checks</h4></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-tag"><i class="fas fa-school"></i><span>School-only system</span></div>
+                <div class="footer-tag"><i class="fas fa-coins"></i><span>Low-cost implementation</span></div>
+                <div class="footer-tag"><i class="fas fa-user-shield"></i><span>Privacy-focused design</span></div>
+                <div class="footer-tag"><i class="fas fa-laptop-code"></i><span>Hackathon Prototype</span></div>
+            </div>
+            <div class="copyright">© 2024 Integrated Attendance-Clinic Management System | AIBSBSS | Tsion Humnesa & Team</div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
